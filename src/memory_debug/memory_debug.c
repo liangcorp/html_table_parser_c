@@ -290,15 +290,14 @@ void f_debug_memory_print(void)
 	       mem_alloc_record_list.no_of_realloc_call);
 	printf("%d free function call\n\n", mem_alloc_record_list.no_of_free_call);
 
-
 	for (i = 0; i < LIST_SIZE; i++) {
-        if (mem_alloc_record_list.no_of_malloc_call > 0 ||
-            mem_alloc_record_list.no_of_calloc_call > 0 ||
-            mem_alloc_record_list.no_of_realloc_call > 0) {
-            printf("Detail:\n");
-        } else {
-            break;
-        }
+		if (mem_alloc_record_list.no_of_malloc_call > 0 ||
+		    mem_alloc_record_list.no_of_calloc_call > 0 ||
+		    mem_alloc_record_list.no_of_realloc_call > 0) {
+			printf("Detail:\n");
+		} else {
+			break;
+		}
 
 		if (mem_alloc_location_list.mem_alloc_location[i].allocation_line != 0)
 			printf("%u %s at line %u in file %s\n",

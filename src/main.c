@@ -48,13 +48,18 @@ int main(void)
 	//
 	// 	free(test);
 
-	const char *input = "Hello, World!";
+	int i;
+	const char *input[] = { "Hello, World!", "Hello!", ",World" };
 
-	size_t length = strlen(input);
+	size_t input_array_length = sizeof(input) / sizeof(input[0]);
 
-	unsigned long long hash_result = fnv1a_hash_64(input, length);
+	for (i = 0; i < input_array_length; i++) {
+		size_t length = strlen(input[i]);
 
-	printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
+		unsigned long long hash_result = fnv1a_hash_64(input[i], length);
+
+		printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
+	}
 
 #ifdef F_MEMORY_DEBUG
 	f_debug_memory_leak_check();
