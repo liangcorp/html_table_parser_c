@@ -10,49 +10,50 @@ const unsigned int FNV_PRIME_64 = 2166136261UL;
 const unsigned long long OFFSET_BASIS_32 = 1099511628211ULL;
 const unsigned long long OFFSET_BASIS_64 = 14695981039346656037ULL;
 
-unsigned long long fnv1_hash_32(const char* input, size_t input_length) {
-    int i;
-    unsigned long long hash_value = OFFSET_BASIS_32;
+unsigned long long fnv1_hash_32(const char *input, size_t input_length)
+{
+	int i;
+	unsigned long long hash_value = OFFSET_BASIS_32;
 
-    for (i = 0; i < input_length; i++) {
-        hash_value = (hash_value * FNV_PRIME_32) ^ *(input + 1);
-    }
+	for (i = 0; i < input_length; i++) {
+		hash_value = (hash_value * FNV_PRIME_32) ^ *(input + 1);
+	}
 
-    return hash_value;
+	return hash_value;
 }
 
+unsigned long long fnv1_hash_64(const char *input, size_t input_length)
+{
+	int i;
+	unsigned long long hash_value = OFFSET_BASIS_64;
 
-unsigned long long fnv1_hash_64(const char* input, size_t input_length) {
-    int i;
-    unsigned long long hash_value = OFFSET_BASIS_64;
+	for (i = 0; i < input_length; i++) {
+		hash_value = (hash_value * FNV_PRIME_64) ^ *(input + 1);
+	}
 
-    for (i = 0; i < input_length; i++) {
-        hash_value = (hash_value * FNV_PRIME_64) ^ *(input + 1);
-    }
-
-    return hash_value;
+	return hash_value;
 }
 
-unsigned long long fnv1a_hash_32(const char* input, size_t input_length) {
-    int i;
-    unsigned long long hash_value = OFFSET_BASIS_32;
+unsigned long long fnv1a_hash_32(const char *input, size_t input_length)
+{
+	int i;
+	unsigned long long hash_value = OFFSET_BASIS_32;
 
-    for (i = 0; i < input_length; i++) {
-        hash_value = (hash_value ^ *(input + i)) * FNV_PRIME_32;
-    }
+	for (i = 0; i < input_length; i++) {
+		hash_value = (hash_value ^ *(input + i)) * FNV_PRIME_32;
+	}
 
-    return hash_value;
+	return hash_value;
 }
 
+unsigned long long fnv1a_hash_64(const char *input, size_t input_length)
+{
+	int i;
+	unsigned long long hash_value = OFFSET_BASIS_64;
 
-unsigned long long fnv1a_hash_64(const char* input, size_t input_length) {
-    int i;
-    unsigned long long hash_value = OFFSET_BASIS_64;
+	for (i = 0; i < input_length; i++) {
+		hash_value = (hash_value ^ *(input + i)) * FNV_PRIME_64;
+	}
 
-    for (i = 0; i < input_length; i++) {
-        hash_value = (hash_value ^ *(input + i)) * FNV_PRIME_64;
-    }
-
-    return hash_value;
+	return hash_value;
 }
-

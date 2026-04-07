@@ -6,11 +6,10 @@
 
 #else
 
-#include <malloc.h>
+#include <stdlib.h>
 
 #endif
 
-#include <stdlib.h>
 #include <string.h>
 
 #include "html_table_parser.h"
@@ -26,40 +25,40 @@ int main(void)
 //
 // 	int *test = NULL;
 //
-// #ifdef F_MEMORY_DEBUG
-// 	f_debug_memory_debug_init();
-// #endif
-//
-// 	test = calloc(1, sizeof(int));
-// 	/* 	free(test); */
-//
-// 	if (result.is_ok) {
-// 		printf("<table> count: %d\n", htc.table_head_occurrence);
-// 		printf("<tr> count: %d\n", htc.tr_head_occurrence);
-// 		printf("<th> count: %d\n", htc.th_head_occurrence);
-// 		printf("<td> count: %d\n", htc.td_head_occurrence);
-//
-// 		printf("<table> count: %d\n", htc.table_tail_occurrence);
-// 		printf("<tr> count: %d\n", htc.tr_tail_occurrence);
-// 		printf("<th> count: %d\n", htc.th_tail_occurrence);
-// 		printf("<td> count: %d\n", htc.td_tail_occurrence);
-// 	} else {
-// 		printf("%s", result.error_message);
-// 	}
-//
-// 	free(test);
-// #ifdef F_MEMORY_DEBUG
-// 	f_debug_memory_leak_check();
-// 	f_debug_memory_print();
-// #endif
+#ifdef F_MEMORY_DEBUG
+	f_debug_memory_debug_init();
+#endif
+	//
+	// 	test = calloc(1, sizeof(int));
+	// 	/* 	free(test); */
+	//
+	// 	if (result.is_ok) {
+	// 		printf("<table> count: %d\n", htc.table_head_occurrence);
+	// 		printf("<tr> count: %d\n", htc.tr_head_occurrence);
+	// 		printf("<th> count: %d\n", htc.th_head_occurrence);
+	// 		printf("<td> count: %d\n", htc.td_head_occurrence);
+	//
+	// 		printf("<table> count: %d\n", htc.table_tail_occurrence);
+	// 		printf("<tr> count: %d\n", htc.tr_tail_occurrence);
+	// 		printf("<th> count: %d\n", htc.th_tail_occurrence);
+	// 		printf("<td> count: %d\n", htc.td_tail_occurrence);
+	// 	} else {
+	// 		printf("%s", result.error_message);
+	// 	}
+	//
+	// 	free(test);
 
-    const char *input = "Hello, World!";
+	const char *input = "Hello, World!";
 
-    size_t length = strlen(input);
+	size_t length = strlen(input);
 
-    unsigned long long hash_result = fnv1a_hash_64(input, length);
+	unsigned long long hash_result = fnv1a_hash_64(input, length);
 
-    printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
+	printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
 
+#ifdef F_MEMORY_DEBUG
+	f_debug_memory_leak_check();
+	f_debug_memory_print();
+#endif
 	return 0;
 }
