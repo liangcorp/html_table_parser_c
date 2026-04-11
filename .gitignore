@@ -56,3 +56,7 @@ compile_commands.json
 .cache/
 bin/
 */bin/**
+.vscode
+*/.vscode/**
+.cache
+*/.cache/**
