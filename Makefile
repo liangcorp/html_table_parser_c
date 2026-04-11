@@ -11,8 +11,8 @@ all:
 	${AR} rcs ./lib/libhashmap.a ./lib/hashmap.o
 	${AR} rcs ./lib/libfnv1a_hash.a ./lib/fnv1a_hash.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -std=c99 -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -I ./src/memory_debug -c ./src/main.c -o ./lib/main.o
-	${CC} -Wall -Werror -Wpedantic -std=c99 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a ./lib/libmemory_debug.a
+	${CC} -Wall -Werror -Wpedantic -std=c99 -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -c ./src/main.c -o ./lib/main.o
+	${CC} -Wall -Werror -Wpedantic -std=c99 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a
 
 memory_debug:
 	mkdir -p lib
@@ -32,11 +32,15 @@ memory_debug:
 release:
 	mkdir -p lib
 	mkdir -p bin
-	${CC} -Wall -Werror -Wpedantic -std=c99 -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
+	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
+	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/hashmap/hashmap.c -o ./lib/hashmap.o
+	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/fnv_hash/fnv1a_hash.c -o ./lib/fnv1a_hash.o
 	${AR} rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
+	${AR} rcs ./lib/libhashmap.a ./lib/hashmap.o
+	${AR} rcs ./lib/libfnv1a_hash.a ./lib/fnv1a_hash.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -std=c99 -I ./lib/ -I ./src/include -I ./src/html_table_parser -c ./src/main.c -o ./lib/main.o
-	${CC} -Wall -Werror -Wpedantic -std=c99 -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a
+	${CC} -std=c99 -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -c ./src/main.c -o ./lib/main.o
+	${CC} -std=c99 -g -o ./bin/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a
 
 
 check:
