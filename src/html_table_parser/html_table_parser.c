@@ -3,7 +3,7 @@
 
 #include "html_table_parser.h"
 
-ResultType get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
+Result get_html_table_tag_count(HTMLTagCount *htc, const char *html_str)
 {
 	unsigned int table_head_fit_count = 0;
 	unsigned int tr_head_fit_count = 0;
@@ -18,7 +18,7 @@ ResultType get_html_table_tag_count(html_tag_count_t *htc, const char *html_str)
 	unsigned int i = 0;
 	unsigned int j = 0;
 
-	ResultType result = { false, "" };
+	Result result = { false, "" };
 	memset(result.error_message, '\0', sizeof(result.error_message));
 
 	while (*(html_str + i) != '\0') {

@@ -12,14 +12,14 @@ typedef struct Node {
 	unsigned int key;
 	void *value;
 	struct node *next_node_ptr;
-} NodeType;
+} Node;
 
 typedef struct HashMap {
 	unsigned int capacity;
 	unsigned int occupancy;
-	NodeType *bucket;
-} HashMapType;
+	Node *bucket;
+} HashMap;
 
-ResultType hashmap_init(HashMapType **new_hashmap);
-void hashmap_print(HashMapType *hashmap);
-void hashmap_destroy(HashMapType *hashmap);
+Result hashmap_init(HashMap **new_hashmap);
+void hashmap_print(HashMap *hashmap);
+void hashmap_destroy(HashMap *hashmap);

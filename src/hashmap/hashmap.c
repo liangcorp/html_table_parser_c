@@ -9,16 +9,16 @@
 #include "malloc.h"
 #endif
 
-ResultType hashmap_init(HashMapType **new_hashmap)
+Result hashmap_init(HashMap **new_hashmap)
 {
 	int i;
-	ResultType result = { true, "" };
+	Result result = { true, "" };
 	// memset(result.error_message, '\0', sizeof(result.error_message));
 
 	*new_hashmap = NULL;
 	*new_hashmap = calloc(1, sizeof(new_hashmap));
 	(*new_hashmap)->capacity = HASHMAP_INIT_CAPACITY;
-	(*new_hashmap)->bucket = calloc(HASHMAP_INIT_CAPACITY, sizeof(HashMapType));
+	(*new_hashmap)->bucket = calloc(HASHMAP_INIT_CAPACITY, sizeof(HashMap));
 
 	for (i = 0; i < HASHMAP_INIT_CAPACITY; i++) {
 		((*new_hashmap)->bucket + i)->hash = 0;
@@ -30,7 +30,7 @@ ResultType hashmap_init(HashMapType **new_hashmap)
 	return result;
 }
 
-void hashmap_print(HashMapType *hashmap)
+void hashmap_print(HashMap *hashmap)
 {
 	int i;
 	printf("Current hashmap capacity: %d\n", hashmap->capacity);
@@ -44,8 +44,8 @@ void hashmap_print(HashMapType *hashmap)
 	}
 }
 
-void hashmap_destroy(HashMapType *hashmap)
+void hashmap_destroy(HashMap *hashmap)
 {
-    free(hashmap->bucket);
-    free(hashmap);
+	free(hashmap->bucket);
+	free(hashmap);
 }

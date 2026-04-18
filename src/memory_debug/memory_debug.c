@@ -6,10 +6,10 @@
 
 #include "memory_debug.h"
 
-MemAllocRecordType mem_alloc_record;
-MemAllocRecordListType mem_alloc_record_list;
-MemAllocLocationType mem_alloc_location;
-MemAllocLocationListType mem_alloc_location_list;
+MemAllocRecord mem_alloc_record;
+MemAllocRecordList mem_alloc_record_list;
+MemAllocLocation mem_alloc_location;
+MemAllocLocationList mem_alloc_location_list;
 
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 

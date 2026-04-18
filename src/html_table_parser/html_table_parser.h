@@ -20,7 +20,7 @@
 #define HTML_TD_HEAD_STR "<td>"
 #define HTML_TD_TAIL_STR "</td>"
 
-typedef struct html_tag_count {
+typedef struct HTMLTagCount {
 	unsigned int table_head_occurrence;
 	unsigned int tr_head_occurrence;
 	unsigned int th_head_occurrence;
@@ -30,10 +30,10 @@ typedef struct html_tag_count {
 	unsigned int tr_tail_occurrence;
 	unsigned int th_tail_occurrence;
 	unsigned int td_tail_occurrence;
-} html_tag_count_t;
+} HTMLTagCount;
 
-ResultType get_html_table_tag_count(html_tag_count_t *htc, const char *html_str);
-ResultType verify_html_table_architecture(char *html_str);
+Result get_html_table_tag_count(HTMLTagCount *htc, const char *html_str);
+Result verify_html_table_architecture(char *html_str);
 
 bool check_table_tag_architecture(char *html_table_block_str);
 bool check_tr_tag_architecture(char *html_tr_block_str);

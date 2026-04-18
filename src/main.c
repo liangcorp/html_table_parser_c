@@ -62,14 +62,15 @@ int main(void)
 		printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
 	}
 
-	HashMapType *new_hashmap = NULL;
+	HashMap *new_hashmap = NULL;
 
-	ResultType result = hashmap_init(&new_hashmap);
+	Result result = hashmap_init(&new_hashmap);
 
 	if (result.is_ok) {
 		hashmap_print(new_hashmap);
 	}
-    hashmap_destroy(new_hashmap);
+
+	hashmap_destroy(new_hashmap);
 
 #ifdef F_MEMORY_DEBUG
 	f_debug_memory_leak_check();
