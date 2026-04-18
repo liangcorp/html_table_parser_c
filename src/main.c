@@ -69,6 +69,12 @@ int main(void)
 	if (result.is_ok) {
 		hashmap_print(new_hashmap);
 	}
+    else {
+        printf("%s\n", result.error_message);
+        printf("Program exiting with error...\n");
+        return 1;
+    }
+
 
 	hashmap_destroy(new_hashmap);
 

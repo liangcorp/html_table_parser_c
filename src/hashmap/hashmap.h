@@ -7,17 +7,17 @@
 #define TREEIFY_THRESHOLD 8
 #define UNTREEIFY_THRESHOLD 6
 
-typedef struct Node {
+typedef struct Bucket {
 	unsigned int hash;
 	unsigned int key;
 	void *value;
-	struct node *next_node_ptr;
-} Node;
+	struct Bucket *next_node_ptr;
+} Bucket;
 
 typedef struct HashMap {
 	unsigned int capacity;
 	unsigned int occupancy;
-	Node *bucket;
+	Bucket *bucket;
 } HashMap;
 
 Result hashmap_init(HashMap **new_hashmap);
