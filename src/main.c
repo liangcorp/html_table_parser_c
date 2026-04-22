@@ -65,6 +65,8 @@ int main(void)
 	HashMap *new_hashmap = NULL;
 
 	Result result = hashmap_init(&new_hashmap);
+    char *test_str_ptr = "test";
+    result = hashmap_put(new_hashmap, 10000, test_str_ptr);
 
 	if (result.is_ok) {
 		hashmap_print(new_hashmap);
@@ -74,7 +76,6 @@ int main(void)
         printf("Program exiting with error...\n");
         return 1;
     }
-
 
 	hashmap_destroy(new_hashmap);
 
