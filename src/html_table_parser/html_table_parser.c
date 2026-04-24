@@ -95,8 +95,7 @@ Result get_html_table_tag_count(HTMLTagCount *htc, const char *html_str)
 	    htc->td_head_occurrence == htc->td_tail_occurrence) {
 		result.is_ok = true;
 	} else {
-		strncpy(result.error_message, "Malformed html table\n",
-			sizeof(RESULT_ERROR_MESSAGE_SIZE));
+		strncpy(result.error_message, "Malformed html table\n", RESULT_ERROR_MESSAGE_SIZE);
 	}
 
 	return result;

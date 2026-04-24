@@ -17,14 +17,14 @@ Result hashmap_init(HashMap **new_hashmap)
 	int i;
 	Result result;
 	result.is_ok = true;
-	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
+	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
 	*new_hashmap = NULL;
 	*new_hashmap = calloc(1, sizeof(HashMap));
 
 	if (*new_hashmap == NULL) {
 		result.is_ok = false;
-		snprintf(result.error_message, sizeof(RESULT_ERROR_MESSAGE_SIZE),
+		snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE,
 			 "ERROR: Failed to allocate memory for HashMap");
 		return result;
 	}
@@ -56,7 +56,7 @@ Result hashmap_put(HashMap *hashmap, const unsigned int key, void *value)
     */
 	Result result;
 	result.is_ok = true;
-	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
+	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
 	// Node new_node;
 	// new_node.key = key;
@@ -72,11 +72,11 @@ Result hashmap_put(HashMap *hashmap, const unsigned int key, void *value)
 
 Result hashmap_expand(HashMap **hashmap)
 {
-	int i;
+	unsigned int i;
 	unsigned int new_capacity_for_buckets = 0;
 	Result result;
 	result.is_ok = true;
-	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
+	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
 	new_capacity_for_buckets =
 		(*hashmap)->capacity_of_buckets + HASHMAP_INIT_CAPACITY;
@@ -87,7 +87,7 @@ Result hashmap_expand(HashMap **hashmap)
 
 	if (new_bucket_head_ptr == NULL) {
 		result.is_ok = false;
-		snprintf(result.error_message, sizeof(RESULT_ERROR_MESSAGE_SIZE),
+		snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE,
 			 "ERROR: Failed to allocate memory for new Buckets");
 		return result;
 	}
@@ -105,7 +105,7 @@ Result hashmap_expand(HashMap **hashmap)
 
 void hashmap_print(HashMap *hashmap)
 {
-	int i;
+	unsigned int i;
 	printf("Current hashmap capacity for buckets: %d\n",
 	       hashmap->capacity_of_buckets);
 	printf("Current hashmap bucket occupancy: %d\n", hashmap->bucket_occupancy);
@@ -122,7 +122,7 @@ void hashmap_print(HashMap *hashmap)
 
 void hashmap_destroy(HashMap *hashmap)
 {
-	int i;
+	unsigned int i;
 
 	Node *temp_head_node_ptr = NULL;
 	Node *to_be_free_node_ptr = NULL;
