@@ -136,6 +136,7 @@ void *f_debug_memory_realloc(void *ptr, unsigned int size, const char *file,
 
 	mem_alloc_record_list.no_of_realloc_call++;
 
+    printf("%p to ", ptr);
 	new_ptr = realloc(ptr, size);
 
 	if (new_ptr == NULL) {

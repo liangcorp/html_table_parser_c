@@ -12,7 +12,7 @@ const unsigned long long OFFSET_BASIS_64 = 14695981039346656037ULL;
 
 unsigned long long fnv1_hash_32(const char *input, const size_t input_length)
 {
-	int i;
+	unsigned int i;
 	unsigned long long hash_value = OFFSET_BASIS_32;
 
 	for (i = 0; i < input_length; i++) {
@@ -24,7 +24,7 @@ unsigned long long fnv1_hash_32(const char *input, const size_t input_length)
 
 unsigned long long fnv1_hash_64(const char *input, const size_t input_length)
 {
-	int i;
+	unsigned int i;
 	unsigned long long hash_value = OFFSET_BASIS_64;
 
 	for (i = 0; i < input_length; i++) {
@@ -36,7 +36,7 @@ unsigned long long fnv1_hash_64(const char *input, const size_t input_length)
 
 unsigned long long fnv1a_hash_32(const char *input, const size_t input_length)
 {
-	int i;
+	unsigned int i;
 	unsigned long long hash_value = OFFSET_BASIS_32;
 
 	for (i = 0; i < input_length; i++) {
@@ -48,7 +48,7 @@ unsigned long long fnv1a_hash_32(const char *input, const size_t input_length)
 
 unsigned long long fnv1a_hash_64(const char *input, const size_t input_length)
 {
-	int i;
+	unsigned int i;
 	unsigned long long hash_value = OFFSET_BASIS_64;
 
 	for (i = 0; i < input_length; i++) {

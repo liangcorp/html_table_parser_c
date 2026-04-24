@@ -67,6 +67,8 @@ Result hashmap_put(HashMap *hashmap, const unsigned int key, void *value)
 		hashmap_expand(&hashmap);
 	}
 
+    printf("%d, %s\n", key, (char *)value);
+
 	return result;
 }
 

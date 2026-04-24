@@ -3,11 +3,10 @@ AR=ar
 
 all:
 	mkdir -p lib
-	mkdir -p bin
 	mkdir -p bin/Debug
-	${CC} -Wall -Werror -Wpedantic -Walloc-size std=c99 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
-	${CC} -Wall -Werror -Wpedantic -Walloc-size std=c99 -g -I ./lib/ -I ./src/include -c ./src/hashmap/hashmap.c -o ./lib/hashmap.o
-	${CC} -Wall -Werror -Wpedantic -Walloc-size std=c99 -g -I ./lib/ -I ./src/include -c ./src/fnv_hash/fnv1a_hash.c -o ./lib/fnv1a_hash.o
+	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
+	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/hashmap/hashmap.c -o ./lib/hashmap.o
+	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/fnv_hash/fnv1a_hash.c -o ./lib/fnv1a_hash.o
 	${AR} rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
 	${AR} rcs ./lib/libhashmap.a ./lib/hashmap.o
 	${AR} rcs ./lib/libfnv1a_hash.a ./lib/fnv1a_hash.o
@@ -17,7 +16,6 @@ all:
 
 memory_debug:
 	mkdir -p lib
-	mkdir -p bin
 	mkdir -p bin/Debug
 	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -D F_MEMORY_DEBUG -std=c99 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
 	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -D F_MEMORY_DEBUG -std=c99 -g -I ./lib/ -I ./src/include -c ./src/memory_debug/memory_debug.c -o ./lib/memory_debug.o
@@ -33,7 +31,6 @@ memory_debug:
 
 release:
 	mkdir -p lib
-	mkdir -p bin
 	mkdir -p bin/Release
 	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
 	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/hashmap/hashmap.c -o ./lib/hashmap.o
