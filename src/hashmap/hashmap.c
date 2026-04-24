@@ -17,14 +17,14 @@ Result hashmap_init(HashMap **new_hashmap)
 	int i;
 	Result result;
 	result.is_ok = true;
-	memset(result.error_message, '\0', sizeof(result.error_message));
+	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
 
 	*new_hashmap = NULL;
-	*new_hashmap = calloc(1, sizeof(new_hashmap));
+	*new_hashmap = calloc(1, sizeof(HashMap));
 
 	if (*new_hashmap == NULL) {
 		result.is_ok = false;
-		snprintf(result.error_message, sizeof(result.error_message),
+		snprintf(result.error_message, sizeof(RESULT_ERROR_MESSAGE_SIZE),
 			 "ERROR: Failed to allocate memory for HashMap");
 		return result;
 	}
@@ -56,11 +56,11 @@ Result hashmap_put(HashMap *hashmap, const unsigned int key, void *value)
     */
 	Result result;
 	result.is_ok = true;
-	memset(result.error_message, '\0', sizeof(result.error_message));
+	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
 
-	Node new_node;
-	new_node.key = key;
-	new_node.value = value;
+	// Node new_node;
+	// new_node.key = key;
+	// new_node.value = value;
 
 	if (hashmap->bucket_occupancy >=
 	    hashmap->capacity_of_buckets * HASHMAP_OCCUPANCY_THRESHOLD) {
@@ -76,7 +76,7 @@ Result hashmap_expand(HashMap **hashmap)
 	unsigned int new_capacity_for_buckets = 0;
 	Result result;
 	result.is_ok = true;
-	memset(result.error_message, '\0', sizeof(result.error_message));
+	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
 
 	new_capacity_for_buckets =
 		(*hashmap)->capacity_of_buckets + HASHMAP_INIT_CAPACITY;
@@ -87,7 +87,7 @@ Result hashmap_expand(HashMap **hashmap)
 
 	if (new_bucket_head_ptr == NULL) {
 		result.is_ok = false;
-		snprintf(result.error_message, sizeof(result.error_message),
+		snprintf(result.error_message, sizeof(RESULT_ERROR_MESSAGE_SIZE),
 			 "ERROR: Failed to allocate memory for new Buckets");
 		return result;
 	}
