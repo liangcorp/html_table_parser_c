@@ -15,6 +15,7 @@
 #include "html_table_parser.h"
 #include "hashmap.h"
 #include "fnv1a_hash.h"
+#include "memory_arena.h"
 
 #define HASH_SIZE 256
 #define MAX_INPUT_STRING_SIZE 1024
@@ -49,35 +50,41 @@ int main(void)
 	// 	}
 	//
 	// 	free(test);
+	//
+	// int i;
+	// const char *input[] = { "Hello, World!", "Hello!", ",World" };
+	//
+	// size_t input_array_length = sizeof(input) / sizeof(input[0]);
+	//
+	// for (i = 0; i < input_array_length; i++) {
+	// 	size_t length = strnlen(input[i], MAX_INPUT_STRING_SIZE);
+	//
+	// 	unsigned long long hash_result = fnv1a_hash_64(input[i], length);
+	//
+	// 	printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
+	// }
+	//
+	// HashMap *new_hashmap = NULL;
+	//
+	// Result result = hashmap_init(&new_hashmap);
+	// char *test_str_ptr = "test";
+	// result = hashmap_put(new_hashmap, 10000, test_str_ptr);
+	//
+	// if (result.is_ok) {
+	// 	hashmap_print(new_hashmap);
+	// } else {
+	// 	printf("%s\n", result.error_message);
+	// 	printf("Program exiting with error...\n");
+	// 	return 1;
+	// }
+	//
+	// hashmap_destroy(new_hashmap);
 
-	int i;
-	const char *input[] = { "Hello, World!", "Hello!", ",World" };
+	MemoryArena new_arena;
 
-	size_t input_array_length = sizeof(input) / sizeof(input[0]);
+	arena_init(&new_arena, sizeof(int));
 
-	for (i = 0; i < input_array_length; i++) {
-		size_t length = strnlen(input[i], MAX_INPUT_STRING_SIZE);
-
-		unsigned long long hash_result = fnv1a_hash_64(input[i], length);
-
-		printf("FNV-1A Hash (64-bit): %llu\n", hash_result);
-	}
-
-	HashMap *new_hashmap = NULL;
-
-	Result result = hashmap_init(&new_hashmap);
-	char *test_str_ptr = "test";
-	result = hashmap_put(new_hashmap, 10000, test_str_ptr);
-
-	if (result.is_ok) {
-		hashmap_print(new_hashmap);
-	} else {
-		printf("%s\n", result.error_message);
-		printf("Program exiting with error...\n");
-		return 1;
-	}
-
-	hashmap_destroy(new_hashmap);
+	arena_destroy(&new_arena);
 
 #ifdef F_MEMORY_DEBUG
 	f_debug_memory_leak_check();

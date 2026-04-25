@@ -1,44 +1,66 @@
+#ifdef F_MEMORY_DEBUG
+#include "memory_debug.h"
+#else
+#include "malloc.h"
+#endif
+
+#include <stdio.h>
+
 #include "memory_arena.h"
 
-/*
-typedef struct MemoryArena {
-    unsigned int *chunk_head_array;
-    size_t chunk_size;
-	unsigned int occupancy;
-	unsigned int capacity;
-    unsigned int untouched_edge_index;
-    int *start;
-    bool has_free;
-} MemoryArena;
-*/
-
-Result arena_init(MemoryArena *new_memory_arena, size_t arena_size)
+Result arena_init(MemoryArena *new_memory_arena, size_t size)
 {
+	int i;
 	Result result;
 
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
-	new_memory_arena = malloc(arena_size);
+	new_memory_arena->arena_head = malloc(size * NO_OF_ELEMENT);
+	new_memory_arena->element_size = size;
+	new_memory_arena->occupancy = 0;
+	new_memory_arena->arena_frontier_index = 0;
+	new_memory_arena->has_freed_arena = false;
+
+	// printf("element size: %ld\n", size);
+	for (i = 0; i < NO_OF_ELEMENT; i++) {
+		new_memory_arena->element_head_array[i] =
+			(char *)new_memory_arena->arena_head + (size * i);
+		// printf("%p\n", new_memory_arena->element_head_array[i]);
+	}
+
+	if (new_memory_arena->arena_head == NULL) {
+		result.is_ok = false;
+		snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE,
+			 "ERROR: Failed to allocate memory for arena");
+	}
 
 	return result;
 }
 
-Result arena_expand(MemoryArena **new_memory_arena);
-Result arena_alloc(MemoryArena **new_memory_arena, size_t chunk_size);
-Result arena_free(MemoryArena **new_memory_arena, void *chunk_head_ptr);
+Result arena_expand(MemoryArena *new_memory_arena);
+
+Result arena_alloc(MemoryArena *new_memory_arena, size_t element_size);
+
+Result arena_free(MemoryArena *new_memory_arena, void *head_ptr);
+
+Result arena_reset(MemoryArena *memory_arena)
+{
+	int i;
+	Result result;
+
+	result.is_ok = true;
+	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
+
+	memory_arena->element_size = 0;
+	memory_arena->occupancy = 0;
+	memory_arena->arena_frontier_index = 0;
+	memory_arena->has_freed_arena = false;
+
+    return result;
+}
 
 void arena_destroy(MemoryArena *memory_arena)
 {
-	free(memory_arena);
-}
-
-int main()
-{
-	MemoryArena new_arena;
-
-	arena_init(&new_arena, sizeof(int) * 100);
-
-	arena_destroy(&new_arena);
-	return 0;
+	free(memory_arena->arena_head);
 }
