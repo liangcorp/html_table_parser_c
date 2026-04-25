@@ -17,6 +17,7 @@
 #include "fnv1a_hash.h"
 
 #define HASH_SIZE 256
+#define MAX_INPUT_STRING_SIZE 1024
 
 int main(void)
 {
@@ -55,7 +56,7 @@ int main(void)
 	size_t input_array_length = sizeof(input) / sizeof(input[0]);
 
 	for (i = 0; i < input_array_length; i++) {
-		size_t length = strlen(input[i]);
+		size_t length = strnlen(input[i], MAX_INPUT_STRING_SIZE);
 
 		unsigned long long hash_result = fnv1a_hash_64(input[i], length);
 

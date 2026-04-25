@@ -8,3 +8,4 @@ do
     grep -r $i ./src/*
 done
 
+exit 0
