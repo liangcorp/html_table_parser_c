@@ -7,12 +7,14 @@ all:
 	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
 	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/hashmap/hashmap.c -o ./lib/hashmap.o
 	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/fnv_hash/fnv1a_hash.c -o ./lib/fnv1a_hash.o
+	${CC} -Wall -Wextra -Werror -Wpedantic -Walloc-size -std=c99 -g -I ./lib/ -I ./src/include -c ./src/memory_arena/memory_arena.c -o ./lib/memory_arena.o
 	${AR} rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
 	${AR} rcs ./lib/libhashmap.a ./lib/hashmap.o
+	${AR} rcs ./lib/libmemory_arena.a ./lib/memory_arena.o
 	${AR} rcs ./lib/libfnv1a_hash.a ./lib/fnv1a_hash.o
 	cd ..
-	${CC} -Wall -Werror -Wpedantic -std=c99 -D_POSIX_C_SOURCE=200809L -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -c ./src/main.c -o ./lib/main.o
-	${CC} -Wall -Werror -Wpedantic -std=c99 -g -o ./bin/Debug/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a
+	${CC} -Wall -Werror -Wpedantic -std=c99 -D_POSIX_C_SOURCE=200809L -g -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -I ./src/memory_arena -c ./src/main.c -o ./lib/main.o
+	${CC} -Wall -Werror -Wpedantic -std=c99 -g -o ./bin/Debug/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a ./lib/libmemory_arena.a
 
 memory_debug:
 	mkdir -p lib
@@ -37,12 +39,14 @@ release:
 	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/html_table_parser/html_table_parser.c -o ./lib/html_table_parser.o
 	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/hashmap/hashmap.c -o ./lib/hashmap.o
 	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/fnv_hash/fnv1a_hash.c -o ./lib/fnv1a_hash.o
+	${CC} -std=c99 -I ./lib/ -I ./src/include -c ./src/memory_arena/memory_arena.c -o ./lib/memory_arena.o
 	${AR} rcs ./lib/libhtml_table_parser.a ./lib/html_table_parser.o
 	${AR} rcs ./lib/libhashmap.a ./lib/hashmap.o
+	${AR} rcs ./lib/libmemory_arena.a ./lib/memory_arena.o
 	${AR} rcs ./lib/libfnv1a_hash.a ./lib/fnv1a_hash.o
 	cd ..
-	${CC} -std=c99 -D_POSIX_C_SOURCE=200809L -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -c ./src/main.c -o ./lib/main.o
-	${CC} -std=c99 -o ./bin/Release/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a
+	${CC} -std=c99 -D_POSIX_C_SOURCE=200809L -I ./lib/ -I ./src/include -I ./src/html_table_parser -I ./src/hashmap -I ./src/fnv_hash -I ./src/memory_arena -c ./src/main.c -o ./lib/main.o
+	${CC} -std=c99 -o ./bin/Release/html_table_parser ./lib/main.o ./lib/libhtml_table_parser.a ./lib/libhashmap.a ./lib/libfnv1a_hash.a ./lib/libmemory_arena.a
 
 
 check:

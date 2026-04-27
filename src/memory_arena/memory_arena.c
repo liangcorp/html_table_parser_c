@@ -57,6 +57,9 @@ Result arena_reset(MemoryArena *memory_arena)
 	memory_arena->arena_frontier_index = 0;
 	memory_arena->has_freed_arena = false;
 
+	for (i = 0; i < NO_OF_ELEMENT; i++) {
+		memory_arena->element_head_array[i] = 0;
+	}
     return result;
 }
 
