@@ -13,17 +13,20 @@
 #define NO_OF_ELEMENT 100
 
 typedef struct MemoryArena {
-	void *element_head_array[NO_OF_ELEMENT];
 	void *arena_head;
+	void *element_list[NO_OF_ELEMENT];
+	void *occupancy_list[NO_OF_ELEMENT];
 	size_t element_size;
 	unsigned int occupancy;
 	unsigned int arena_frontier_index;
-	bool has_freed_arena;
+	bool has_gap;
+	unsigned int gap_index;
+    void *next_arena_head;
 } MemoryArena;
 
-Result arena_init(MemoryArena *new_memory_arena, size_t size);
-Result arena_expand(MemoryArena *new_memory_arena);
-Result arena_alloc(MemoryArena *new_memory_arena, size_t element_size);
-Result arena_free(MemoryArena *new_memory_arena, void *head_ptr);
+Result arena_init(MemoryArena *memory_arena, size_t element_size);
+void *arena_alloc(MemoryArena *memory_arena);
+Result arena_free(MemoryArena *memory_arena, void *head_ptr);
+Result arena_expand(MemoryArena *memory_arena);
 Result arena_reset(MemoryArena *memory_arena);
 void arena_destroy(MemoryArena *memory_arena);
