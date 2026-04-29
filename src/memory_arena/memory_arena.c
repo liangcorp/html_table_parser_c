@@ -48,6 +48,18 @@ Result arena_init(MemoryArena *memory_arena, size_t size)
 
 void *arena_alloc(MemoryArena *memory_arena)
 {
+    Result result;
+
+    if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THREASHOLD) {
+        MemoryArena *next_arena = NULL;
+        result = arena_expand(memory_arena, next_arena);
+
+        if (!result.is_ok) {
+            printf("%s\n", result.error_message);
+            return NULL;
+        }
+    }
+
 	int i;
 	void *allocated_address = NULL;
 	int starting_index = (!memory_arena->has_gap) ? memory_arena->arena_frontier_index :
@@ -68,29 +80,30 @@ void *arena_alloc(MemoryArena *memory_arena)
 
 Result arena_free(MemoryArena *memory_arena, void *head_ptr);
 
-Result arena_expand(MemoryArena *memory_arena);
-
-Result arena_reset(MemoryArena *memory_arena)
-{
-	int i;
-	Result result;
+Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena) {
+    Result result;
 
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
-	memory_arena->element_size = 0;
-	memory_arena->occupancy = 0;
-	memory_arena->arena_frontier_index = 0;
-	memory_arena->has_gap = false;
+    next_arena = malloc(memory_arena->element_size * NO_OF_ELEMENT);
 
-	for (i = 0; i < NO_OF_ELEMENT; i++) {
-		memory_arena->occupancy_list[i] = NULL;
-	}
+    memory_arena->next_arena_head = next_arena;
 
-	return result;
+    return result;
 }
 
 void arena_destroy(MemoryArena *memory_arena)
 {
+    MemoryArena *temp = memory_arena->next_arena_head;
+    MemoryArena *to_be_freed = NULL;
+
+    while (temp->next_arena_head != NULL) {
+        to_be_freed = temp;
+        temp = temp->next_arena_head;
+        free(to_be_freed);
+    }
+
 	free(memory_arena->arena_head);
+
 }

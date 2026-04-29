@@ -83,6 +83,7 @@ release:
 
 check:
 	${CC} --version
+	${AR} --version
 
 distcheck:
 	uname -a
