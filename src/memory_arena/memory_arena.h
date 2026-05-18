@@ -21,7 +21,7 @@ typedef struct MemoryArena {
 	unsigned int arena_frontier_index;
 	bool has_gap;
 	unsigned int gap_index;
-    void *next_arena_head;
+	void *next_arena_head;
 } MemoryArena;
 
 Result arena_init(MemoryArena *memory_arena, size_t element_size);

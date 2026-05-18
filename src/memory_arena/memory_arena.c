@@ -1,10 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifdef F_MEMORY_DEBUG
 #include "memory_debug.h"
 #else
 #include "malloc.h"
 #endif
-
-#include <stdio.h>
 
 #include "memory_arena.h"
 
@@ -30,7 +31,7 @@ Result arena_init(MemoryArena *memory_arena, size_t size)
 	memory_arena->arena_frontier_index = 0;
 	memory_arena->has_gap = false;
 	memory_arena->gap_index = 0;
-    memory_arena->next_arena_head = NULL;
+	memory_arena->next_arena_head = NULL;
 
 	for (i = 0; i < NO_OF_ELEMENT; i++) {
 		memory_arena->element_list[i] = (char *)memory_arena->arena_head + i * size;
@@ -48,17 +49,17 @@ Result arena_init(MemoryArena *memory_arena, size_t size)
 
 void *arena_alloc(MemoryArena *memory_arena)
 {
-    Result result;
+	Result result;
 
-    if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THREASHOLD) {
-        MemoryArena *next_arena = NULL;
-        result = arena_expand(memory_arena, next_arena);
+	if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THREASHOLD) {
+		MemoryArena *next_arena = NULL;
+		result = arena_expand(memory_arena, next_arena);
 
-        if (!result.is_ok) {
-            printf("%s\n", result.error_message);
-            return NULL;
-        }
-    }
+		if (!result.is_ok) {
+			printf("%s\n", result.error_message);
+			abort();
+		}
+	}
 
 	int i;
 	void *allocated_address = NULL;
@@ -69,8 +70,8 @@ void *arena_alloc(MemoryArena *memory_arena)
 		if (memory_arena->occupancy_list[i] == NULL) {
 			allocated_address = memory_arena->element_list[i];
 			memory_arena->occupancy_list[i] = memory_arena->element_list[i];
-            memory_arena->occupancy++;
-            memory_arena->arena_frontier_index = i;
+			memory_arena->occupancy++;
+			memory_arena->arena_frontier_index = i;
 			break;
 		}
 	}
@@ -80,30 +81,30 @@ void *arena_alloc(MemoryArena *memory_arena)
 
 Result arena_free(MemoryArena *memory_arena, void *head_ptr);
 
-Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena) {
-    Result result;
+Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena)
+{
+	Result result;
 
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
-    next_arena = malloc(memory_arena->element_size * NO_OF_ELEMENT);
+	next_arena = malloc(memory_arena->element_size * NO_OF_ELEMENT);
 
-    memory_arena->next_arena_head = next_arena;
+	memory_arena->next_arena_head = next_arena;
 
-    return result;
+	return result;
 }
 
 void arena_destroy(MemoryArena *memory_arena)
 {
-    MemoryArena *temp = memory_arena->next_arena_head;
-    MemoryArena *to_be_freed = NULL;
+	MemoryArena *temp = memory_arena->next_arena_head;
+	MemoryArena *to_be_freed = NULL;
 
-    while (temp->next_arena_head != NULL) {
-        to_be_freed = temp;
-        temp = temp->next_arena_head;
-        free(to_be_freed);
-    }
+	while (temp->next_arena_head != NULL) {
+		to_be_freed = temp;
+		temp = temp->next_arena_head;
+		free(to_be_freed);
+	}
 
 	free(memory_arena->arena_head);
-
 }
