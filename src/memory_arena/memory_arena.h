@@ -9,7 +9,7 @@
 #define MB (1024 * KB)
 #define GB (1024 * MB)
 
-#define CAPACITY_THREASHOLD 0.75
+#define CAPACITY_THRESHOLD 0.75
 #define NO_OF_ELEMENT 100
 
 typedef struct MemoryArena {

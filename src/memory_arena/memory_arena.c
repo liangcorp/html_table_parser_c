@@ -51,7 +51,7 @@ void *arena_alloc(MemoryArena *memory_arena)
 {
 	Result result;
 
-	if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THREASHOLD) {
+	if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THRESHOLD) {
 		MemoryArena *next_arena = NULL;
 		result = arena_expand(memory_arena, next_arena);
 
