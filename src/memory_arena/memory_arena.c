@@ -97,14 +97,18 @@ Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena)
 
 void arena_destroy(MemoryArena *memory_arena)
 {
-	MemoryArena *temp = memory_arena->next_arena_head;
+    printf("area destroy\n");
+	MemoryArena *temp = memory_arena;
 	MemoryArena *to_be_freed = NULL;
 
+    printf("freeing area heads: %p\n", (void *)temp);
 	while (temp->next_arena_head != NULL) {
 		to_be_freed = temp;
+        printf("temp: %p \nto_be_freed: %p", (void *)temp, (void *)to_be_freed);
 		temp = temp->next_arena_head;
+        printf("temp: %p\n", (void *)temp);
 		free(to_be_freed);
 	}
-
+    printf("freeing last head\n");
 	free(memory_arena->arena_head);
 }
