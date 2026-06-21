@@ -84,17 +84,19 @@ int main(void)
 
 	arena_init(&new_arena, sizeof(int));
 
+    printf("new arena: %p\n", (void *)&new_arena);
 	void *test = arena_alloc(&new_arena);
 	void *test2 = arena_alloc(&new_arena);
 
 	*(int *)test = 4;
 	*(int *)test2 = 8;
 
-	printf("%d\n", *(int *)test);
-	printf("%p\n", test);
-	printf("%d\n", *(int *)test2);
-	printf("%p\n", test2);
+	// printf("%d\n", *(int *)test);
+	// printf("%p\n", test);
+	// printf("%d\n", *(int *)test2);
+	// printf("%p\n", test2);
 
+    printf("new arena: %p\n", (void *)&new_arena);
 	arena_destroy(&new_arena);
 
 #ifdef F_MEMORY_DEBUG

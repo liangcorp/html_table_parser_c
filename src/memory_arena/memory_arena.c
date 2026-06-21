@@ -51,7 +51,7 @@ void *arena_alloc(MemoryArena *memory_arena)
 {
 	Result result;
 
-	if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THRESHOLD) {
+	// if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THRESHOLD) {
 		MemoryArena *next_arena = NULL;
 		result = arena_expand(memory_arena, next_arena);
 
@@ -59,7 +59,7 @@ void *arena_alloc(MemoryArena *memory_arena)
 			printf("%s\n", result.error_message);
 			abort();
 		}
-	}
+	// }
 
 	int i;
 	void *allocated_address = NULL;
@@ -90,25 +90,27 @@ Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena)
 
 	next_arena = malloc(memory_arena->element_size * NO_OF_ELEMENT);
 
-	memory_arena->next_arena_head = next_arena;
+    MemoryArena *temp = memory_arena;
+
+    while (temp->next_arena_head != NULL) {
+        temp = temp->next_arena_head;
+    }
+
+	temp->next_arena_head = next_arena;
 
 	return result;
 }
 
 void arena_destroy(MemoryArena *memory_arena)
 {
-    printf("area destroy\n");
-	MemoryArena *temp = memory_arena;
-	MemoryArena *to_be_freed = NULL;
+    MemoryArena *to_be_freed = NULL;
+	MemoryArena *temp = memory_arena->next_arena_head;
 
-    printf("freeing area heads: %p\n", (void *)temp);
-	while (temp->next_arena_head != NULL) {
-		to_be_freed = temp;
-        printf("temp: %p \nto_be_freed: %p", (void *)temp, (void *)to_be_freed);
-		temp = temp->next_arena_head;
-        printf("temp: %p\n", (void *)temp);
+    free(memory_arena->arena_head);
+
+	while (temp != NULL) {
+        to_be_freed = temp;
+        temp = temp->next_arena_head;
 		free(to_be_freed);
 	}
-    printf("freeing last head\n");
-	free(memory_arena->arena_head);
 }
