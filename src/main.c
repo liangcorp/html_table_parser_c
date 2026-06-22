@@ -10,11 +10,11 @@
 
 #endif
 
-#include <string.h>
+#include <string.h>				// IWYU pragma: keep
 
-#include "html_table_parser.h"
-#include "hashmap.h"
-#include "fnv1a_hash.h"
+#include "html_table_parser.h"	// IWYU pragma: keep
+#include "hashmap.h"			// IWYU pragma: keep
+#include "fnv1a_hash.h"			// IWYU pragma: keep
 #include "memory_arena.h"
 
 #define HASH_SIZE 256

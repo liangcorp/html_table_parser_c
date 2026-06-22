@@ -27,5 +27,5 @@ typedef struct MemoryArena {
 Result arena_init(MemoryArena *memory_arena, size_t element_size);
 void *arena_alloc(MemoryArena *memory_arena);
 Result arena_free(MemoryArena *memory_arena, void *head_ptr);
-Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena);
+Result arena_expand(MemoryArena *memory_arena);
 void arena_destroy(MemoryArena *memory_arena);

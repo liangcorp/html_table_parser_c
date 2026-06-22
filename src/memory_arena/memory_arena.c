@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #ifdef F_MEMORY_DEBUG
-#include "memory_debug.h"
+#include "memory_debug.h"	// IWYU pragma: keep
 #else
 #include "malloc.h"
 #endif
@@ -52,8 +52,7 @@ void *arena_alloc(MemoryArena *memory_arena)
 	Result result;
 
 	// if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THRESHOLD) {
-		MemoryArena *next_arena = NULL;
-		result = arena_expand(memory_arena, next_arena);
+		result = arena_expand(memory_arena);
 
 		if (!result.is_ok) {
 			printf("%s\n", result.error_message);
@@ -81,14 +80,12 @@ void *arena_alloc(MemoryArena *memory_arena)
 
 Result arena_free(MemoryArena *memory_arena, void *head_ptr);
 
-Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena)
+Result arena_expand(MemoryArena *memory_arena)
 {
 	Result result;
 
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
-
-	next_arena = malloc(memory_arena->element_size * NO_OF_ELEMENT);
 
     MemoryArena *temp = memory_arena;
 
@@ -96,7 +93,7 @@ Result arena_expand(MemoryArena *memory_arena, MemoryArena *next_arena)
         temp = temp->next_arena_head;
     }
 
-	temp->next_arena_head = next_arena;
+	temp->next_arena_head = malloc(memory_arena->element_size * NO_OF_ELEMENT);
 
 	return result;
 }
