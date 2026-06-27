@@ -19,7 +19,7 @@ Result get_html_table_tag_count(HTMLTagCount *htc, const char *html_str)
 	unsigned int j = 0;
 
 	Result result = { false, "" };
-	memset(result.error_message, '\0', sizeof(RESULT_ERROR_MESSAGE_SIZE));
+	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
 	while (*(html_str + i) != '\0') {
 		for (j = 0; j < HTML_TABLE_HEAD_LENGTH; j++)
