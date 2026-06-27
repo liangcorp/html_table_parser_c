@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <string.h>				// IWYU pragma: keep
+#include <string.h> // IWYU pragma: keep
 #include <stdlib.h>
 
 #ifdef F_MEMORY_DEBUG
@@ -8,10 +8,9 @@
 
 #endif
 
-
-#include "html_table_parser.h"	// IWYU pragma: keep
-#include "hashmap.h"			// IWYU pragma: keep
-#include "fnv1a_hash.h"			// IWYU pragma: keep
+#include "html_table_parser.h" // IWYU pragma: keep
+#include "hashmap.h"	       // IWYU pragma: keep
+#include "fnv1a_hash.h"	       // IWYU pragma: keep
 #include "memory_arena.h"
 
 #define HASH_SIZE 256
@@ -76,13 +75,13 @@ int main(void)
 	// }
 	//
 	// hashmap_destroy(new_hashmap);
-    Result result;
+	Result result;
 
 	MemoryArena new_arena;
 
 	arena_init(&new_arena, sizeof(int));
 
-    printf("new arena: %p\n", (void *)&new_arena);
+	printf("new arena: %p\n", (void *)&new_arena);
 	void *test = arena_alloc(&new_arena);
 	void *test2 = arena_alloc(&new_arena);
 
@@ -94,13 +93,13 @@ int main(void)
 	printf("%d\n", *(int *)test2);
 	printf("%p\n", test2);
 
-    printf("new arena: %p\n", (void *)&new_arena);
+	printf("new arena: %p\n", (void *)&new_arena);
 	result = arena_destroy(&new_arena);
 
-    if (!result.is_ok) {
-        printf("%s\n", result.error_message);
-        exit(1);
-    }
+	if (!result.is_ok) {
+		printf("%s\n", result.error_message);
+		exit(1);
+	}
 
 #ifdef F_MEMORY_DEBUG
 	f_debug_memory_leak_check();

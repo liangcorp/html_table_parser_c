@@ -13,15 +13,15 @@
 #define NO_OF_ELEMENT 100
 
 typedef struct MemoryArena {
-	void *arena_head;                       /* pointer of top of arena memory allocation*/
-	void *element_list[NO_OF_ELEMENT];      /* array of pointers */
-	void *occupancy_list[NO_OF_ELEMENT];    /* array to track if pointers were occupied */
-	size_t element_size;                    /* size of each element */
-	unsigned int occupancy;                 /* occupancy */
-	unsigned int arena_frontier_index;      /* index of first empty element */
-	bool has_gap;                           /* does the element_list has empty gap */
-	unsigned int gap_index;                 /* position of the first gap */
-	struct MemoryArena *next_arena_head;    /* next arena pointer */
+	void *arena_head;		     // pointer of top of arena memory allocation
+	void *element_list[NO_OF_ELEMENT];   // array of pointers
+	void *occupancy_list[NO_OF_ELEMENT]; // array to track if pointers were occupied
+	size_t element_size;		     // size of each element
+	unsigned int occupancy;		     // occupancy
+	unsigned int arena_frontier_index;   // index of first empty element
+	bool has_gap;			     // does the element_list has empty gap
+	unsigned int gap_index;		     // position of the first gap
+	struct MemoryArena *next_arena_head; // next arena pointer
 } MemoryArena;
 
 Result arena_init(MemoryArena *memory_arena, size_t element_size);

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #ifdef F_MEMORY_DEBUG
-#include "memory_debug.h"	// IWYU pragma: keep
+#include "memory_debug.h" // IWYU pragma: keep
 #else
 #include "malloc.h"
 #endif
@@ -52,12 +52,12 @@ void *arena_alloc(MemoryArena *memory_arena)
 	Result result;
 
 	// if (memory_arena->occupancy >= NO_OF_ELEMENT * CAPACITY_THRESHOLD) {
-		result = arena_expand(memory_arena);
+	result = arena_expand(memory_arena);
 
-		if (!result.is_ok) {
-			printf("%s\n", result.error_message);
-			abort();
-		}
+	if (!result.is_ok) {
+		printf("%s\n", result.error_message);
+		abort();
+	}
 	// }
 
 	int i;
@@ -87,20 +87,23 @@ Result arena_expand(MemoryArena *memory_arena)
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
-    if (memory_arena == NULL) {
-        result.is_ok = false;
-        snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE, "ERROR: NULL memory arena passed to function: arena_expand at line %u in file %s", __LINE__, __FILE__);
-        return result;
-    }
+	if (memory_arena == NULL) {
+		result.is_ok = false;
+		snprintf(
+			result.error_message, RESULT_ERROR_MESSAGE_SIZE,
+			"ERROR: NULL memory arena passed to function: arena_expand at line %u in file %s",
+			__LINE__, __FILE__);
+		return result;
+	}
 
-    MemoryArena *current_arena = memory_arena;
+	MemoryArena *current_arena = memory_arena;
 
-    while (current_arena->next_arena_head != NULL) {
-        current_arena = current_arena->next_arena_head;
-    }
+	while (current_arena->next_arena_head != NULL) {
+		current_arena = current_arena->next_arena_head;
+	}
 
 	current_arena->next_arena_head = malloc(sizeof(MemoryArena));
-    memset(current_arena->next_arena_head, 0, sizeof(MemoryArena));
+	memset(current_arena->next_arena_head, 0, sizeof(MemoryArena));
 
 	return result;
 }
@@ -112,22 +115,25 @@ Result arena_destroy(MemoryArena *memory_arena)
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
-    if (memory_arena == NULL) {
-        result.is_ok = false;
-        snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE, "ERROR: NULL memory arena passed to function: arena_destroy at line %u in file %s", __LINE__, __FILE__);
-        return result;
-    }
+	if (memory_arena == NULL) {
+		result.is_ok = false;
+		snprintf(
+			result.error_message, RESULT_ERROR_MESSAGE_SIZE,
+			"ERROR: NULL memory arena passed to function: arena_destroy at line %u in file %s",
+			__LINE__, __FILE__);
+		return result;
+	}
 
-    MemoryArena *to_be_freed = NULL;
+	MemoryArena *to_be_freed = NULL;
 	MemoryArena *current_arena = memory_arena->next_arena_head;
 
 	while (current_arena != NULL) {
-        to_be_freed = current_arena;
-        current_arena = current_arena->next_arena_head;
+		to_be_freed = current_arena;
+		current_arena = current_arena->next_arena_head;
 		free(to_be_freed);
 	}
 
-    free(memory_arena->arena_head);
+	free(memory_arena->arena_head);
 
-    return result;
+	return result;
 }
