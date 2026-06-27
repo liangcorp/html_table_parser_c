@@ -1,16 +1,13 @@
 #include <stdio.h>
+#include <string.h>				// IWYU pragma: keep
+#include <stdlib.h>
 
 #ifdef F_MEMORY_DEBUG
 
 #include "memory_debug.h"
 
-#else
-
-#include <stdlib.h>
-
 #endif
 
-#include <string.h>				// IWYU pragma: keep
 
 #include "html_table_parser.h"	// IWYU pragma: keep
 #include "hashmap.h"			// IWYU pragma: keep
@@ -79,6 +76,7 @@ int main(void)
 	// }
 	//
 	// hashmap_destroy(new_hashmap);
+    Result result;
 
 	MemoryArena new_arena;
 
@@ -91,13 +89,18 @@ int main(void)
 	*(int *)test = 4;
 	*(int *)test2 = 8;
 
-	// printf("%d\n", *(int *)test);
-	// printf("%p\n", test);
-	// printf("%d\n", *(int *)test2);
-	// printf("%p\n", test2);
+	printf("%d\n", *(int *)test);
+	printf("%p\n", test);
+	printf("%d\n", *(int *)test2);
+	printf("%p\n", test2);
 
     printf("new arena: %p\n", (void *)&new_arena);
-	arena_destroy(&new_arena);
+	result = arena_destroy(&new_arena);
+
+    if (!result.is_ok) {
+        printf("%s\n", result.error_message);
+        exit(1);
+    }
 
 #ifdef F_MEMORY_DEBUG
 	f_debug_memory_leak_check();

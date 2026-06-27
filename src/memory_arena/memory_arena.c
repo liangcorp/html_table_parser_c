@@ -87,27 +87,47 @@ Result arena_expand(MemoryArena *memory_arena)
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
 
-    MemoryArena *temp = memory_arena;
-
-    while (temp->next_arena_head != NULL) {
-        temp = temp->next_arena_head;
+    if (memory_arena == NULL) {
+        result.is_ok = false;
+        snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE, "ERROR: NULL memory arena passed to function: arena_expand at line %u in file %s", __LINE__, __FILE__);
+        return result;
     }
 
-	temp->next_arena_head = malloc(memory_arena->element_size * NO_OF_ELEMENT);
+    MemoryArena *current_arena = memory_arena;
+
+    while (current_arena->next_arena_head != NULL) {
+        current_arena = current_arena->next_arena_head;
+    }
+
+	current_arena->next_arena_head = malloc(sizeof(MemoryArena));
+    memset(current_arena->next_arena_head, 0, sizeof(MemoryArena));
 
 	return result;
 }
 
-void arena_destroy(MemoryArena *memory_arena)
+Result arena_destroy(MemoryArena *memory_arena)
 {
+	Result result;
+
+	result.is_ok = true;
+	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
+
+    if (memory_arena == NULL) {
+        result.is_ok = false;
+        snprintf(result.error_message, RESULT_ERROR_MESSAGE_SIZE, "ERROR: NULL memory arena passed to function: arena_destroy at line %u in file %s", __LINE__, __FILE__);
+        return result;
+    }
+
     MemoryArena *to_be_freed = NULL;
-	MemoryArena *temp = memory_arena->next_arena_head;
+	MemoryArena *current_arena = memory_arena->next_arena_head;
+
+	while (current_arena != NULL) {
+        to_be_freed = current_arena;
+        current_arena = current_arena->next_arena_head;
+		free(to_be_freed);
+	}
 
     free(memory_arena->arena_head);
 
-	while (temp != NULL) {
-        to_be_freed = temp;
-        temp = temp->next_arena_head;
-		free(to_be_freed);
-	}
+    return result;
 }

@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 
-#define RESULT_ERROR_MESSAGE_SIZE 100
+#define RESULT_ERROR_MESSAGE_SIZE 500
 
 typedef struct Result {
 	bool is_ok;
