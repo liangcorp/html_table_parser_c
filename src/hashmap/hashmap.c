@@ -14,7 +14,6 @@
 */
 Result hashmap_init(HashMap **new_hashmap)
 {
-	int i;
 	Result result;
 	result.is_ok = true;
 	memset(result.error_message, '\0', RESULT_ERROR_MESSAGE_SIZE);
@@ -34,7 +33,7 @@ Result hashmap_init(HashMap **new_hashmap)
 	(*new_hashmap)->bucket_occupancy = 0;
 	(*new_hashmap)->head_bucket_ptr = calloc(HASHMAP_INIT_CAPACITY, sizeof(BucketArena));
 
-	for (i = 0; i < HASHMAP_INIT_CAPACITY; i++) {
+	for (int i = 0; i < HASHMAP_INIT_CAPACITY; i++) {
 		((*new_hashmap)->head_bucket_ptr + i)->size = 0;
 		((*new_hashmap)->head_bucket_ptr + i)->head_node_ptr = NULL;
 	}
@@ -73,7 +72,6 @@ Result hashmap_put(HashMap *hashmap, const unsigned int key, void *value)
 
 Result hashmap_expand(HashMap **hashmap)
 {
-	unsigned int i;
 	unsigned int new_capacity_for_buckets = 0;
 	Result result;
 	result.is_ok = true;
@@ -92,7 +90,7 @@ Result hashmap_expand(HashMap **hashmap)
 		return result;
 	}
 
-	for (i = (*hashmap)->capacity_of_buckets; i < new_capacity_for_buckets; i++) {
+	for (unsigned int i = (*hashmap)->capacity_of_buckets; i < new_capacity_for_buckets; i++) {
 		(new_bucket_head_ptr + i)->size = 0;
 		(new_bucket_head_ptr + i)->head_node_ptr = NULL;
 	}
@@ -105,11 +103,10 @@ Result hashmap_expand(HashMap **hashmap)
 
 void hashmap_print(HashMap *hashmap)
 {
-	unsigned int i;
 	printf("Current hashmap capacity for buckets: %d\n", hashmap->capacity_of_buckets);
 	printf("Current hashmap bucket occupancy: %d\n", hashmap->bucket_occupancy);
 
-	for (i = 0; i < hashmap->capacity_of_buckets; i++) {
+	for (unsigned int i = 0; i < hashmap->capacity_of_buckets; i++) {
 		if ((hashmap->head_bucket_ptr + i)->head_node_ptr != NULL)
 			printf("[%d]: %d\n", i,
 			       *(int *)((hashmap->head_bucket_ptr + i)->head_node_ptr->value));
@@ -120,12 +117,10 @@ void hashmap_print(HashMap *hashmap)
 
 void hashmap_destroy(HashMap *hashmap)
 {
-	unsigned int i;
-
 	Node *temp_head_node_ptr = NULL;
 	Node *to_be_free_node_ptr = NULL;
 
-	for (i = 0; i < hashmap->capacity_of_buckets; i++) {
+	for (unsigned int i = 0; i < hashmap->capacity_of_buckets; i++) {
 		temp_head_node_ptr = (hashmap->head_bucket_ptr + i)->head_node_ptr;
 
 		if (temp_head_node_ptr == NULL)

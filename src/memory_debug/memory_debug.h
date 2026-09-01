@@ -1,5 +1,9 @@
 #pragma once
 
+#include <stdlib.h>
+#include <stdbool.h>
+#include <pthread.h>
+
 #define LIST_SIZE 2048
 #define FILENAME_SIZE_LIMIT 4096
 

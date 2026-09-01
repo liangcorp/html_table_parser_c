@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
-#include <pthread.h>
 
 #include "memory_debug.h"
 
@@ -235,11 +232,10 @@ void f_debug_memory_debug_init(void)
 
 void f_debug_memory_leak_check(void)
 {
-	int i;
 	unsigned int no_of_unfreed_memory = 0;
 
 	printf("\n========== Memory Debug: Leak Check ==========\n");
-	for (i = 0; i < LIST_SIZE; i++) {
+	for (int i = 0; i < LIST_SIZE; i++) {
 		if (mem_alloc_record_list.mem_alloc_record[i].ptr_value != NULL) {
 			printf("unfreed heap memory: %p allocated at line %u in file %s\n",
 			       mem_alloc_record_list.mem_alloc_record[i].ptr_value,
@@ -254,7 +250,6 @@ void f_debug_memory_leak_check(void)
 
 void f_debug_memory_print(void)
 {
-	int i;
 	const char *allocation_functions[] = { "malloc", "calloc", "realloc", "free" };
 
 	printf("\n========== Memory Debug: Function Calls ==========\n");
@@ -270,7 +265,7 @@ void f_debug_memory_print(void)
 		printf("Detail:\n");
 	}
 
-	for (i = 0; i < LIST_SIZE; i++) {
+	for (int i = 0; i < LIST_SIZE; i++) {
 		if (mem_alloc_location_list.mem_alloc_location[i].allocation_line != 0)
 			printf("%u %s at line %u in file %s\n",
 			       mem_alloc_location_list.mem_alloc_location[i].occurrences,

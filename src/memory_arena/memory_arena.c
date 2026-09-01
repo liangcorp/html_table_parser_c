@@ -60,12 +60,11 @@ void *arena_alloc(MemoryArena *memory_arena)
 	}
 	// }
 
-	int i;
 	void *allocated_address = NULL;
 	int starting_index = (!memory_arena->has_gap) ? memory_arena->arena_frontier_index :
 							memory_arena->gap_index;
 
-	for (i = starting_index; i < NO_OF_ELEMENT; i++) {
+	for (int i = starting_index; i < NO_OF_ELEMENT; i++) {
 		if (memory_arena->occupancy_list[i] == NULL) {
 			allocated_address = memory_arena->element_list[i];
 			memory_arena->occupancy_list[i] = memory_arena->element_list[i];
